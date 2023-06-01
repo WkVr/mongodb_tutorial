@@ -17,14 +17,24 @@ const connectToDatabase = async () => {
 }
 
 const sampleAccount = [{
-    account_holder: 'John',
-    account_id: '123456',
-    balance: 200,
+    account_holder: 'John 3',
+    account_id: '123456 3',
+    balance: 203,
     last_updated: new Date(),
 },{
-    account_holder: 'John 2',
-    account_id: '123456 2',
-    balance: 202,
+    account_holder: 'John 4',
+    account_id: '123456 4',
+    balance: 204,
+    last_updated: new Date(),
+},{
+    account_holder: 'John 5',
+    account_id: '123456 5',
+    balance: 205,
+    last_updated: new Date(),
+},{
+    account_holder: 'John 6',
+    account_id: '123456 6',
+    balance: 206,
     last_updated: new Date(),
 }];
 
@@ -36,6 +46,17 @@ const documentsToDelete = {balance: {$lt: 200}};
 
 // const update = { $inc: { balance: 100 } };
 const update = { $inc: { balance: 100 } };
+
+const pipeline = [
+    { $match: { balance: { $gt: 201 } } },
+    { $sort: { last_updated: -1 } },
+    { $project: {
+        _id: 1,
+        account_holder: 1,
+        balance: 1,
+        gbp_balance: { $divide: ["$balance", 1.3] }
+    } }
+]
 
 const main = async () => {
     try{
@@ -65,8 +86,14 @@ const main = async () => {
         // let res = await accountCollection.deleteOne(documentsToDelete);
         // console.log(res);
 
-        let res = await accountCollection.deleteMany(documentsToDelete);
-        console.log(res);
+        // let res = await accountCollection.deleteMany(documentsToDelete);
+        // console.log(res);
+
+        let res = await accountCollection.aggregate(pipeline);
+        
+        for await (const doc of res){
+            console.log(doc);
+        }
     }
     catch(e) {
         console.log(e);
