@@ -28,8 +28,11 @@ const sampleAccount = [{
     last_updated: new Date(),
 }];
 
-// const documentsToFind = {balance: {$gt: 200}};
-const documentsToFind = {_id: ObjectId("6478aeedff24c3837af9dac6")};
+const documentsToFind = {balance: {$gt: 200}};
+// const documentsToFind = { _id: "6478aeedff24c3837af9dac7" };
+
+// const update = { $inc: { balance: 100 } };
+const update = { $inc: { balance: 100 } };
 
 const main = async () => {
     try{
@@ -47,7 +50,13 @@ const main = async () => {
         // let count = accountCollection.countDocuments(documentsToFind);
         // await res.forEach((doc) => console.log(doc));
 
-        let res = await accountCollection.findOne(documentsToFind);
+        // let res = await accountCollection.findOne(documentsToFind);
+        // console.log(res);
+
+        // let res = await accountCollection.updateOne(documentsToFind, update);
+        // console.log(res);
+
+        let res = await accountCollection.updateMany(documentsToFind, update);
         console.log(res);
     }
     catch(e) {
