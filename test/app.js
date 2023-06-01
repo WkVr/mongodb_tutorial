@@ -31,6 +31,9 @@ const sampleAccount = [{
 const documentsToFind = {balance: {$gt: 200}};
 // const documentsToFind = { _id: "6478aeedff24c3837af9dac7" };
 
+// const documentsToDelete = { _id: "6478aeedff24c3837af9dac7" };
+const documentsToDelete = {balance: {$lt: 200}};
+
 // const update = { $inc: { balance: 100 } };
 const update = { $inc: { balance: 100 } };
 
@@ -56,7 +59,13 @@ const main = async () => {
         // let res = await accountCollection.updateOne(documentsToFind, update);
         // console.log(res);
 
-        let res = await accountCollection.updateMany(documentsToFind, update);
+        // let res = await accountCollection.updateMany(documentsToFind, update);
+        // console.log(res);
+
+        // let res = await accountCollection.deleteOne(documentsToDelete);
+        // console.log(res);
+
+        let res = await accountCollection.deleteMany(documentsToDelete);
         console.log(res);
     }
     catch(e) {
