@@ -28,6 +28,9 @@ const sampleAccount = [{
     last_updated: new Date(),
 }];
 
+// const documentsToFind = {balance: {$gt: 200}};
+const documentsToFind = {_id: ObjectId("6478aeedff24c3837af9dac6")};
+
 const main = async () => {
     try{
         await connectToDatabase();
@@ -37,8 +40,15 @@ const main = async () => {
         // const res = await accountCollection.insertOne(sampleAccount);
         // console.log(res.insertedId);
 
-        const res = await accountCollection.insertMany(sampleAccount);
-        console.log(res.insertedIds);
+        // const res = await accountCollection.insertMany(sampleAccount);
+        // console.log(res.insertedIds);
+
+        // let res = accountCollection.find(documentsToFind);
+        // let count = accountCollection.countDocuments(documentsToFind);
+        // await res.forEach((doc) => console.log(doc));
+
+        let res = await accountCollection.findOne(documentsToFind);
+        console.log(res);
     }
     catch(e) {
         console.log(e);
